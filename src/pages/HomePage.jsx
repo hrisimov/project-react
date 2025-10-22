@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import api from '@/api';
 import ListingFilters from '@/components/ListingFilters';
 import ListingList from '@/components/ListingList';
 import { Separator } from '@/components/ui';
 
 const HomePage = () => {
   const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      const response = await api.get('/api/listings');
+      setListings(response.data);
+    };
+
+    fetchListings();
+  }, []);
 
   const handleFilters = (filters) => {
     // Will implement later
