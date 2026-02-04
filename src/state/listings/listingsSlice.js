@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import api from '@/api';
 
 const initialState = {
   listings: [],
@@ -11,5 +13,13 @@ const listingsSlice = createSlice({
   initialState,
   reducers: {},
 });
+
+export const fetchListings = createAsyncThunk(
+  'listings/fetchListings',
+  async (options) => {
+    const response = await api.get('/api/listings', options);
+    return response.data;
+  },
+);
 
 export default listingsSlice.reducer;
